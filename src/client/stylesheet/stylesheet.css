@@ -1,0 +1,230 @@
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html{
+    font-size: 10px;
+  }
+  
+  body {
+    background-color: #f2f2f2;
+    padding: 5px 20px;
+    margin: auto;
+  }
+  
+  .main_container {
+    display: grid;
+    grid-gap: 20px;
+  }
+
+  .header {
+    font-size: 18px;
+    margin: 25px 0 50px 0;
+  }
+  
+  .footer {
+    font-size: 18px;
+    text-align: center;
+    margin: 40px 0 20px 0;  
+  }
+
+  .launch_detail {
+    display: flex;
+    align-content: center;
+    margin-bottom: 12px;
+  }
+
+  .launch_detail.type_list {
+    display: block;
+  }
+
+  .detail_label {
+    font-size: 20px;
+  }
+
+  .type_list .detail_label {
+    font-size: 22px;
+  }
+
+  .detail_value {
+    color: #474f98;
+    margin-left: 5px;
+    font-size: 20px;
+  }
+
+  .type_list .detail_value {
+    margin-left: 30px;
+    font-size: 22px;
+  }
+  
+  .filter_item {
+    background-color: #c5e09b;
+    border-radius: 8px;
+    font-family: inherit;
+    padding: 4px 25px 8px 25px;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  
+  .filter_item.active {
+    background-color: #7cba01;
+  }
+  
+  .filter_category {
+    text-align: center;
+    margin: 5px 0 35px 0;
+  }
+  
+  .filter_type {
+    display: inline-block;
+    border-bottom: 2px solid #c4bdbb;
+    margin: 0 0 15px 0;
+    padding-bottom: 4px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  
+  .filter_values {
+    display: grid;
+    grid-template-columns: minmax(25%, auto) minmax(25%, auto);
+    justify-content: space-between;
+    padding: 0 25px;
+    grid-gap: 25px;
+  }
+  
+  .launch_filters {
+    background: white;
+    border-radius: 8px;
+    padding: 10px 10px 40px 10px;
+    align-self: start;
+  }
+
+  .launch_filters h2{
+    font-size: 30px;
+  }
+  
+  .launch_detail {
+    display: flex;
+    align-content: center;
+    margin-bottom: 12px;
+  }
+  
+  .launch_detail.type_list {
+    display: block;
+  }
+  
+  .detail_label {
+    font-size: 20px;
+  }
+  
+  .type_list .detail_label {
+    font-size: 22px;
+  }
+  
+  .detail_value {
+    color: #474f98;
+    margin-left: 5px;
+    font-size: 20px;
+  }
+  
+  .type_list .detail_value {
+    margin-left: 30px;
+    font-size: 22px;
+  }
+  
+  .figure_item {
+    background: #f2f2f2;
+    text-align: center;
+  }
+  
+  .figure_item img {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+  }
+
+  .launch_item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    font-weight: 500;
+  }
+  
+  .launch_name {
+    color: #474f98;
+    margin: 15px 0;
+    font-size: 22px;
+  }
+  
+  .launch_list {
+    display: grid;
+    grid-gap: 25px;
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .main_container {
+      grid-template-columns: minmax(auto, 20%) minmax(auto, 80%);
+    }
+    .launch_list {
+      grid-template-columns: repeat(4, calc(25% - 7.5px));
+      grid-gap: 10px;
+    }
+  }
+  
+  @media screen and (min-width: 701px) and (max-width: 1023px) {
+    .main_container {
+      grid-template-columns: minmax(auto, 30%) minmax(auto, 70%);
+    }
+    .launch_list {
+      grid-template-columns: repeat(2, calc(50% - 5px));
+      grid-gap: 10px;
+    }
+  }
+  
+  @media screen and (min-width: 701px) {
+    .header {
+      margin: 0 0 50px 0;
+      font-size: 16px;
+    }
+    .detail_label .detail_value {
+      font-size: 16px;
+    }
+    .type_list .detail_label .type_list .detail_value .filter_type {
+      font-size: 18px
+    }
+    .filter_category{
+      margin: 5px 0 25px 0;
+    }
+    .filter_values {
+      padding: 0 20px;
+      grid-gap: 15px;
+    }
+    .launch_filters {
+      padding: 10px 0px 40px 0px;
+      font-size: 8px;
+    }
+    .launch_filters h2{
+      padding: 0 10px;
+      font-size: 22px;
+    }
+    .detail_label,.detail_value {
+      font-size: 16px;
+    }
+    .type_list .detail_label .type_list .detail_value .launch_name {
+      font-size: 18px
+    }
+    .launch_item {
+      padding: 20px;
+    }
+    .filter_item {
+      padding: 2px 20px 6px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+  }
