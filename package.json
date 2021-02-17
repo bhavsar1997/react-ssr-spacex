@@ -4,9 +4,10 @@
   "description": "Demo of React-SSR Web App which details SpaceX launches by Tesla",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --parallel dev:*",
-    "heroku-postbuild":"npm-run-all --parallel dev:*",
-    "build":"npm-run-all --parallel dev:*",
+    "heroku-postbuild": "webpack --config webpack.server.js && webpack --config webpack.client.js",
+    "build": "webpack --config webpack.server.js && webpack --config webpack.client.js",
+    "serve": "node build/bundle.js",
+    "dev": "npm-run-all --parallel dev:*",
     "dev:server": "nodemon --watch build --exec node build/bundle.js",
     "dev:build-server": "webpack --config webpack.server.js --watch",
     "dev:build-client": "webpack --config webpack.client.js --watch"
