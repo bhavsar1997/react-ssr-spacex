@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -82,7 +82,7 @@ module.exports = {
 	"detail_label": "stylesheet__detail_label___2x9ex",
 	"detail_value": "stylesheet__detail_value___c6tlV",
 	"filter_item": "stylesheet__filter_item___tyKIg",
-	"active": "stylesheet__active___3kOVx",
+	"filter_item_active": "stylesheet__filter_item_active___aMcKh",
 	"filter_category": "stylesheet__filter_category___3v2a7",
 	"filter_type": "stylesheet__filter_type___yhkuo",
 	"filter_values": "stylesheet__filter_values___3xuvU",
@@ -97,10 +97,16 @@ module.exports = {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-router-config");
+module.exports = require("babel-polyfill");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-config");
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -135,13 +141,13 @@ exports.default = [_extends({}, _App2.default, {
 })];
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-redux");
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -170,7 +176,7 @@ var fetchSpaceXdata = exports.fetchSpaceXdata = function fetchSpaceXdata(filters
                     switch (_context.prev = _context.next) {
                         case 0:
                             _context.next = 2;
-                            return _axios2.default.get('https://api.spacexdata.com/v3/launches?limit=100' + filters);
+                            return _axios2.default.get('https://api.spacexdata.com/v3/launches?limit=' + filters.limit + '&launch_success=' + filters.launch_success + '&land_success=' + filters.landing_status + '&launch_year=' + filters.launch_year);
 
                         case 2:
                             res = _context.sent;
@@ -196,33 +202,33 @@ var fetchSpaceXdata = exports.fetchSpaceXdata = function fetchSpaceXdata(filters
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-helmet");
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(9);
+__webpack_require__(2);
 
 var _express = __webpack_require__(10);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _reactRouterConfig = __webpack_require__(2);
+var _reactRouterConfig = __webpack_require__(3);
 
-var _Routes = __webpack_require__(3);
+var _Routes = __webpack_require__(4);
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
@@ -260,12 +266,6 @@ app.listen(PORT, function () {
 });
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-polyfill");
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
@@ -286,7 +286,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterConfig = __webpack_require__(2);
+var _reactRouterConfig = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -317,15 +317,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+__webpack_require__(2);
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(4);
+var _reactRedux = __webpack_require__(5);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(6);
 
-var _reactHelmet = __webpack_require__(6);
+var _reactHelmet = __webpack_require__(7);
 
 var _Header = __webpack_require__(14);
 
@@ -354,16 +356,72 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = function (_React$Component) {
     _inherits(Home, _React$Component);
 
-    function Home() {
-        _classCallCheck(this, Home);
-
-        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-    }
-
     _createClass(Home, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.fetchSpaceXdata();
+            this.props.fetchSpaceXdata({
+                limit: '100',
+                launch_success: '',
+                landing_status: '',
+                launch_year: ''
+            });
+        }
+    }]);
+
+    function Home(props) {
+        _classCallCheck(this, Home);
+
+        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+        _this.state = {
+            limit: '100',
+            launch_success: '',
+            landing_status: '',
+            launch_year: ''
+        };
+        _this.applyFilter = _this.applyFilter.bind(_this);
+        return _this;
+    }
+
+    _createClass(Home, [{
+        key: 'updateLaunchList',
+        value: function updateLaunchList() {
+            this.props.fetchSpaceXdata({
+                limit: this.state.limit,
+                launch_success: this.state.launch_success,
+                landing_status: this.state.landing_status,
+                launch_year: this.state.launch_year
+            });
+        }
+    }, {
+        key: 'applyFilter',
+        value: function applyFilter(filterType, value) {
+            var _this2 = this;
+
+            if (filterType === "launch_year") {
+                value = value === this.state.launch_year ? '' : value;
+                this.setState({
+                    launch_year: value
+                }, function () {
+                    return _this2.updateLaunchList();
+                });
+            } else if (filterType === "launch_success") {
+                value = value === this.state.launch_success ? '' : value;
+                this.setState({
+                    launch_success: value
+                }, function () {
+                    return _this2.updateLaunchList();
+                });
+            } else if (filterType === "land_success") {
+                value = value === this.state.landing_status ? '' : value;
+                this.setState({
+                    landing_status: value
+                }, function () {
+                    return _this2.updateLaunchList();
+                });
+            } else {
+                return;
+            }
         }
     }, {
         key: 'render',
@@ -385,9 +443,7 @@ var Home = function (_React$Component) {
                 _react2.default.createElement(
                     'main',
                     { className: _stylesheet2.default.main_container },
-                    _react2.default.createElement(_FilterComponent2.default, { handler: function handler() {
-                            return console.log("hello");
-                        } }),
+                    _react2.default.createElement(_FilterComponent2.default, { applyFilter: this.applyFilter, active: this.state }),
                     _react2.default.createElement(_LaunchListComponent2.default, { data: this.props.spacexdata })
                 ),
                 _react2.default.createElement(
@@ -414,7 +470,7 @@ var Home = function (_React$Component) {
 ;
 
 function loadData(store) {
-    return store.dispatch((0, _actions.fetchSpaceXdata)());
+    return store.dispatch((0, _actions.fetchSpaceXdata)({ limit: '100', launch_success: '', landing_status: '', launch_year: '' }));
 }
 
 function mapStateToProps(state) {
@@ -475,6 +531,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+__webpack_require__(2);
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -502,8 +560,6 @@ var filterData = [{
 }];
 
 exports.default = function (props) {
-    var handler = props.handler;
-
     return _react2.default.createElement(
         'div',
         { className: _stylesheet2.default.launch_filters },
@@ -527,10 +583,8 @@ exports.default = function (props) {
                     category.data.map(function (filter) {
                         return _react2.default.createElement(
                             'button',
-                            { className: _stylesheet2.default.filter_item, key: filter,
-                                onClick: function onClick() {
-                                    return handler;
-                                } },
+                            { className: props.active.launch_year === filter.toString() && category.type === 'launch_year' || props.active.landing_status === filter && category.type === 'land_success' || props.active.launch_success === filter && category.type === 'launch_success' ? _stylesheet2.default.filter_item_active : _stylesheet2.default.filter_item,
+                                key: filter, onClick: props.applyFilter.bind(undefined, category.type, filter.toString()) },
                             filter
                         );
                     })
@@ -585,8 +639,8 @@ var renderData = function renderData(data) {
             ),
             _react2.default.createElement(_DetailItem2.default, { value: item.mission_id, label: 'Mission Ids' }),
             _react2.default.createElement(_DetailItem2.default, { value: item.launch_year, label: 'Launch Year' }),
-            _react2.default.createElement(_DetailItem2.default, { value: item.launch_success, label: 'Successful Launch' }),
-            _react2.default.createElement(_DetailItem2.default, { value: 'NA', label: 'Successful Landing' })
+            _react2.default.createElement(_DetailItem2.default, { value: item.launch_success ? 'True' : 'False', label: 'Successful Launch' }),
+            _react2.default.createElement(_DetailItem2.default, { value: item.rocket.first_stage.cores[0].land_success ? 'True' : 'False', label: 'Successful Landing' })
         );
     });
 };
@@ -700,19 +754,19 @@ var _server = __webpack_require__(20);
 
 var _reactRouterDom = __webpack_require__(21);
 
-var _Routes = __webpack_require__(3);
+var _Routes = __webpack_require__(4);
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
-var _reactRedux = __webpack_require__(4);
+var _reactRedux = __webpack_require__(5);
 
 var _serializeJavascript = __webpack_require__(22);
 
 var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
-var _reactRouterConfig = __webpack_require__(2);
+var _reactRouterConfig = __webpack_require__(3);
 
-var _reactHelmet = __webpack_require__(6);
+var _reactHelmet = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -765,7 +819,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _redux = __webpack_require__(7);
+var _redux = __webpack_require__(8);
 
 var _reduxThunk = __webpack_require__(24);
 
@@ -799,7 +853,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _redux = __webpack_require__(7);
+var _redux = __webpack_require__(8);
 
 var _usersReducer = __webpack_require__(26);
 
@@ -822,7 +876,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(6);
 
 exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];

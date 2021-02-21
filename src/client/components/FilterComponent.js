@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import style from '../stylesheet/stylesheet.css';
 
@@ -18,7 +19,6 @@ const filterData = [{
 }];
 
 export default (props) => {
-    const { handler } = props;
     return (
         <div className={style.launch_filters}>
             <h2>Filters</h2>
@@ -28,8 +28,13 @@ export default (props) => {
                     <div className={style.filter_values}>
                         {
                             category.data.map((filter) =>
-                                <button className={style.filter_item} key={filter}
-                                    onClick={() => handler}>
+                            
+                                <button className={
+                                (props.active.launch_year === filter.toString() && category.type === 'launch_year') 
+                                || (props.active.landing_status === filter && category.type === 'land_success')
+                                || (props.active.launch_success === filter && category.type === 'launch_success')
+                                 ? (style.filter_item_active) : style.filter_item}
+                                key={filter} onClick={props.applyFilter.bind(this,category.type,filter.toString())}>
                                     {filter}
                                 </button>
                             )

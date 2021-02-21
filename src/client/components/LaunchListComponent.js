@@ -11,8 +11,8 @@ const renderData = (data) => {
                 <p className={style.launch_name}>{item.mission_name}  #{item.flight_number}</p>
                 <DetailItem value={item.mission_id} label="Mission Ids" />
                 <DetailItem value={item.launch_year} label="Launch Year" />
-                <DetailItem value={item.launch_success} label="Successful Launch" />
-                <DetailItem value="NA" label="Successful Landing" />
+                <DetailItem value={item.launch_success ? 'True':'False'} label="Successful Launch" />
+                <DetailItem value={item.rocket.first_stage.cores[0].land_success ? 'True' : 'False'} label="Successful Landing" />
             </div>
         )
     })
